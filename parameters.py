@@ -38,7 +38,10 @@ def basic_training_parameters(parser):
     ##### Evaluation Parameters
     parser.add_argument('--no_train_metrics', action='store_true',   help='Flag. If set, evaluation metrics are not computed for the training data. Saves a forward pass over the full training dataset.')
     parser.add_argument('--evaluate_on_gpu',  action='store_true',   help='Flag. If set, all metrics, when possible, are computed on the GPU (requires Faiss-GPU).')
-    parser.add_argument('--evaluation_metrics', nargs='+', default=['e_recall@1', 'e_recall@2', 'e_recall@4', 'nmi', 'f1', 'mAP_1000', 'mAP_lim', 'mAP_c', 'dists@intra', 'dists@inter', 'dists@intra_over_inter', 'rho_spectrum@0', 'rho_spectrum@-1', 'rho_spectrum@1', 'rho_spectrum@2', 'rho_spectrum@10'], type=str, help='Metrics to evaluate performance by.')
+    parser.add_argument('--evaluation_metrics', nargs='+', default=['e_recall@1', 'e_recall@2', 'e_recall@4', 'nmi', 'f1', 'mAP_1000', 'mAP_lim', 'mAP_c', \
+                                                                    'dists@intra', 'dists@inter', 'dists@intra_over_inter', 'rho_spectrum@0', \
+                                                                    'rho_spectrum@-1', 'rho_spectrum@1', 'rho_spectrum@2', 'rho_spectrum@10'], type=str, help='Metrics to evaluate performance by.')
+
     parser.add_argument('--storage_metrics',    nargs='+', default=['e_recall@1'],     type=str, help='Improvement in these metrics on a dataset trigger checkpointing.')
     parser.add_argument('--evaltypes',          nargs='+', default=['discriminative'], type=str, help='The network may produce multiple embeddings (ModuleDict, relevant for e.g. DiVA). If the key is listed here, the entry will be evaluated on the evaluation metrics.\
                                                                                                        Note: One may use Combined_embed1_embed2_..._embedn-w1-w1-...-wn to compute evaluation metrics on weighted (normalized) combinations.')
@@ -54,24 +57,14 @@ def basic_training_parameters(parser):
 
 
 
-
-#######################################
-def extension_parameters(parser):
-    parser.add_argument('--ext_some_parameter', default=0, type=float, help='Some extension parameters.')
-    return parser
-
-
 #######################################
 def wandb_parameters(parser):
     ### Online Logging/Wandb Log Arguments
     parser.add_argument('--log_online',      action='store_true',            help='Flag. If set, run metrics are stored online in addition to offline logging. Should generally be set.')
-    parser.add_argument('--online_backend',  default='wandb',  type=str,     help='Online Backend to use. Options are currently: wandb & comet')
     parser.add_argument('--wandb_key',       default='<your_api_key_here>',  type=str,   help='API key for W&B.')
-    parser.add_argument('--comet_api_key',   default='<your_api_key_here>',  type=str,   help='API key for CometML.')
     parser.add_argument('--project',         default='Sample_Project',       type=str,   help='Name of the project - relates to W&B project names. In --savename default setting part of the savename.')
     parser.add_argument('--group',           default='Sample_Group',         type=str,   help='Name of the group - relates to W&B group names - all runs with same setup but different seeds are logged into one group. \
                                                                                                In --savename default setting part of the savename.')
-
     return parser
 
 
@@ -95,7 +88,6 @@ def loss_specific_parameters(parser):
     ### ProxyNCA
     parser.add_argument('--loss_proxynca_lrmulti',      default=50,     type=float, help='Learning Rate multiplier for Proxies in proxynca.')
     #NOTE: The number of proxies is determined by the number of data classes.
-
 
     ### NPair
     parser.add_argument('--loss_npair_l2',     default=0.005,        type=float, help='L2 weight in NPair. Note: Set to 0.02 in paper, but multiplied with 0.25 in their implementation.')
@@ -142,21 +134,6 @@ def loss_specific_parameters(parser):
     parser.add_argument('--loss_arcface_lr',             default=0.0005,  type=float, help='Learning rate on class proxies.')
     parser.add_argument('--loss_arcface_angular_margin', default=0.5,     type=float, help='Angular margin in radians.')
     parser.add_argument('--loss_arcface_feature_scale',  default=16,      type=float, help='Inverse Temperature for NCA objective.')
-
-
-    ######### MIXManifold Experiments
-    ### Mixup-Parameters
-    parser.add_argument('--mixup_no_manifold', action='store_true', help='Run simple Mixup (NOT Manifold Mixup, which is the default)')
-    parser.add_argument('--mixup_alpha',       default=2.,   type=float, help='Weight decay for optimizer.')
-    ### Margin with Mixup
-    parser.add_argument('--loss_mixupmargin_margin',        default=0.2,          type=float, help='See margin loss.')
-    parser.add_argument('--loss_mixupmargin_beta_lr',       default=0.0005,       type=float, help='See margin loss.')
-    parser.add_argument('--loss_mixupmargin_beta',          default=1.2,          type=float, help='See margin loss.')
-    parser.add_argument('--loss_mixupmargin_nu',            default=0,            type=float, help='See margin loss.')
-    parser.add_argument('--loss_mixupmargin_beta_constant', action='store_true',              help='See margin loss.')
-    ### Triplet with Mixup
-    parser.add_argument('--loss_mixuptriplet_margin',       default=0.2,          type=float, help='See triplet loss.')
-
     return parser
 
 
@@ -177,6 +154,7 @@ def batchmining_specific_parameters(parser):
 def batch_creation_parameters(parser):
     parser.add_argument('--data_sampler',              default='class_random', type=str, help='How the batch is created. Available options: See datasampler/__init__.py.')
     parser.add_argument('--samples_per_class',         default=2,              type=int, help='Number of samples in one class drawn before choosing the next class. Set to >1 for tuple-based loss.')
+    ### Batch-Sample Flags - Have no relevance to default SPC-N sampling
     parser.add_argument('--data_batchmatch_bigbs',     default=512,            type=int, help='Size of batch to be summarized into a smaller batch. For distillation/coreset-based methods.')
     parser.add_argument('--data_batchmatch_ncomps',    default=10,             type=int, help='Number of batch candidates that are evaluated, from which the best one is chosen.')
     parser.add_argument('--data_storage_no_update',    action='store_true',              help='Flag for methods that need a sample storage. If set, storage entries are NOT updated.')
