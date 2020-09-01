@@ -1,13 +1,14 @@
 
 
-## The main steps on our updating:
+## The main steps on adding a new criteria:
 
-1. add new criteria into the folder: criteria
+> add new criteria into the folder: ltr_criteria
 
-2. update parameters.loss_specific_parameters for parameter setting
+> update criteria.__init__.py for initialization of the newly defined criteria
 
-3. update criteria.__init__.py about the initialization of the newly added criteria
+> update parameters.loss_specific_parameters for parameter setting
 
+> test the criteria using dml_main.dml_eval.py
 
 
 ## Be aware the differences between traditional ltr and metric learning:
@@ -28,3 +29,14 @@ In other words, metric learning is more like a kind of classification.
 ## Notes during the process of customization
 
 ### Some important settings to be tuned
+
+
+## changes made on main.py in order to make it runnable
+- set the arguments, such as data path
+
+create a new file: dml_eval.py based on main.py
+
+1> revise {import datasets      as datasets} to {import datasets      as dataset_module} due to naming rules
+{import metrics       as metrics} to {import metrics       as metric_module}
+
+2> define the run() function, without the block of INPUT ARGUMENTS

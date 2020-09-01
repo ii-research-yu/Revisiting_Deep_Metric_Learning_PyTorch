@@ -3,14 +3,8 @@ from criteria import triplet, margin, proxynca, npair
 from criteria import lifted, contrastive, softmax
 from criteria import angular, snr, histogram, arcface
 from criteria import softtriplet, multisimilarity, quadruplet
-
 ### Non-Standard Criteria
-<<<<<<< HEAD
-from criteria import moco, adversarial_separation, fast_moco, invariant_spread, dc, imrot
-
-=======
 from criteria import adversarial_separation
->>>>>>> ec7fd6c8a698d54f2f15d4b93a51f52057d59dca
 ### Basic Libs
 import copy
 
