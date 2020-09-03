@@ -5,6 +5,9 @@ from criteria import angular, snr, histogram, arcface
 from criteria import softtriplet, multisimilarity, quadruplet
 ### Non-Standard Criteria
 from criteria import adversarial_separation
+### ltr criteria
+from ltr_criteria import topk_pre
+from ltr_criteria import rs_topk_pre
 ### Basic Libs
 import copy
 
@@ -26,7 +29,9 @@ def select(loss, opt, to_optim, batchminer=None):
               'softtriplet':softtriplet,
               'arcface':arcface,
               'quadruplet':quadruplet,
-              'adversarial_separation':adversarial_separation}
+              'adversarial_separation':adversarial_separation,
+              'topk_pre':topk_pre,
+              'rs_topk_pre':rs_topk_pre}
 
     if loss not in losses: raise NotImplementedError('Loss {} not implemented!'.format(loss))
 

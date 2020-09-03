@@ -335,8 +335,8 @@ if __name__ == '__main__':
 
     #update opt to mimic the command-line input
 
-    root_dataset = '/home/dl-box/WorkBench/Datasets/CVPR'
-    root_output  = '/home/dl-box/WorkBench/CodeBench/PyCharmProject/Project_output/Out_img_metric/'
+    root_dataset = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/CVPR'
+    root_output  = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/Project_output/Out_img_metric/Revisiting_DML'
 
     opt.dataset = 'cars196'
 
@@ -345,10 +345,12 @@ if __name__ == '__main__':
 
     opt.kernels = 6
     opt.n_epochs = 2
-    opt.bs = 112
-    opt.samples_per_class = 2
-    opt.loss = 'npair'
-    opt.batch_mining = 'npair'
+    opt.bs = 100
+    opt.samples_per_class = 5
+    opt.pk = 5
+    opt.margin = 0.1
+    opt.loss = 'rs_topk_pre'
+    opt.batch_mining = 'random'
     opt.arch = 'resnet50_frozen'
 
     ##---------------- update default parameter setting  -------------------##
