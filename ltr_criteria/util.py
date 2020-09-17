@@ -25,6 +25,7 @@ def get_pairwise_stds(batch_labels):
 
 	return sim_mat_std
 
+
 def get_pairwise_similarity(batch_reprs):
 	'''
 	todo-as-note Currently, it the dot-product of a pair of representation vectors, on the assumption that the input vectors are already normalized
@@ -35,6 +36,7 @@ def get_pairwise_similarity(batch_reprs):
 
 	sim_mat = torch.matmul(batch_reprs, batch_reprs.t())
 	return sim_mat
+
 
 def dist(batch_reprs, eps = 1e-16, squared=False):
 	"""

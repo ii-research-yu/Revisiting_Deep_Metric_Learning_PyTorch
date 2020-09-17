@@ -335,8 +335,10 @@ if __name__ == '__main__':
 
     #update opt to mimic the command-line input
 
-    root_dataset = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/CVPR'
-    root_output  = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/Project_output/Out_img_metric/Revisiting_DML'
+    #root_dataset = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/CVPR'
+    #root_output  = '/media/dl-box/f12286fd-f13c-4fe0-a92d-9f935d6a7dbd/Project_output/Out_img_metric/Revisiting_DML'
+    root_dataset = '/home/dl-box/WorkBench/Datasets/CVPR'
+    root_output  = '/home/dl-box/WorkBench/CodeBench/PyCharmProject/Project_output/Out_img_metric/'
 
     opt.dataset = 'cars196'
 
@@ -349,7 +351,7 @@ if __name__ == '__main__':
     opt.samples_per_class = 5
     opt.pk = 5
     opt.margin = 0.1
-    opt.loss = 'rs_topk_pre'
+    opt.loss = 'lambdarank' # rs_topk_pre | listnet | lambdarank
     opt.batch_mining = 'random'
     opt.arch = 'resnet50_frozen'
 

@@ -8,6 +8,8 @@ from criteria import adversarial_separation
 ### ltr criteria
 from ltr_criteria import topk_pre
 from ltr_criteria import rs_topk_pre
+from ltr_criteria import listnet
+from ltr_criteria import lambdarank
 ### Basic Libs
 import copy
 
@@ -31,7 +33,10 @@ def select(loss, opt, to_optim, batchminer=None):
               'quadruplet':quadruplet,
               'adversarial_separation':adversarial_separation,
               'topk_pre':topk_pre,
-              'rs_topk_pre':rs_topk_pre}
+              'rs_topk_pre':rs_topk_pre,
+              'listnet':listnet,
+              'lambdarank':lambdarank
+              }
 
     if loss not in losses: raise NotImplementedError('Loss {} not implemented!'.format(loss))
 
